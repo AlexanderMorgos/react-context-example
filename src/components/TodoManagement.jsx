@@ -1,32 +1,23 @@
-import React, { useContext } from 'react';
-import { uuid } from 'uuidv4';
+import React from 'react';
 
-import { TodoContext } from '../providers/todo';
-import { addTodo } from '../actions/todo';
 
-export const TodoManagement = () => {
+export const TodoManagement = ({ onSubmit }) => {
   const [inputValue, setInputValue] = React.useState('');
-  const { dispatch } = useContext(TodoContext);
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
   }
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = React.useCallback(async (e) => {
     e.preventDefault();
 
     if (!inputValue) {
       return;
     }
 
-    dispatch(
-      await addTodo({
-        id: uuid(),
-        title: inputValue,
-      })
-    );
+    await onSubmit(inputValue);
     setInputValue('');
-  };
+  }, [onSubmit, inputValue]);
 
   return (
     <form onSubmit={handleSubmit}>

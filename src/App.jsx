@@ -1,14 +1,29 @@
 import React from 'react';
+import { uuid } from 'uuidv4';
 
-import { TodoProvider } from './providers/todo';
+import { createTodo, getTodos } from './actions/todo';
+import { TodoContext } from './providers/todo';
 import { TodoManagement } from './components/TodoManagement';
 import { TodoList } from './components/TodoList';
 
-export default function App() {
+export const App = () => {
+  const { dispatch } = React.useContext(TodoContext);
+  
+  const handleSubmit = React.useCallback(async (data) => {
+    dispatch(
+      await createTodo({
+        id: uuid(),
+        title: data,
+      })
+    );
+
+    getTodos();
+  }, [dispatch]);
+  
   return (
-    <TodoProvider>
-      <TodoManagement />
+    <>
+      <TodoManagement onSubmit={handleSubmit} />
       <TodoList />
-    </TodoProvider>
+    </>
   );
 }
