@@ -7,7 +7,6 @@ export const TodoList = () => {
   const {
     state: { todos },
   } = useContext(TodoContext);
-  console.log(todos)
 
   return (
     <ul>

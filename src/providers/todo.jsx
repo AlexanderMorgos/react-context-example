@@ -1,5 +1,7 @@
 import React, { useReducer } from 'react';
 
+import { TODOS_ACTION_TYPE } from '../constants/todos';
+
 const defaultState = {
   todos: []
 };
@@ -9,7 +11,7 @@ const reducer = (
   action
 ) => {
   const actions = {
-    ADD: {
+    [TODOS_ACTION_TYPE.add]: {
       ...state,
       todos: [...state.todos, action.payload]
     }
