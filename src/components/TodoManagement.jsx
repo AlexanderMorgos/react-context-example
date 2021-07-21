@@ -6,7 +6,6 @@ import { addTodo } from '../actions/todo';
 
 export const TodoManagement = () => {
   const [inputValue, setInputValue] = React.useState('');
-  const [submitting, setSubmitting] = React.useState(false);
   const { dispatch } = useContext(TodoContext);
 
   const handleInputChange = (e) => {
@@ -20,8 +19,6 @@ export const TodoManagement = () => {
       return;
     }
 
-    setSubmitting(true);
-
     dispatch(
       await addTodo({
         id: uuid(),
@@ -29,8 +26,6 @@ export const TodoManagement = () => {
       })
     );
     setInputValue('');
-
-    setSubmitting(false);
   };
 
   return (
@@ -39,7 +34,6 @@ export const TodoManagement = () => {
       <button type="submit">
         Add Todo
       </button>
-      {submitting && <div>Loading</div>}
     </form>
   );
 };
